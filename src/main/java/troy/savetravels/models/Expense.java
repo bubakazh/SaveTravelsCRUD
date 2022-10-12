@@ -1,5 +1,7 @@
 package troy.savetravels.models;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -28,22 +30,31 @@ public class Expense {
     @Size(min = 5, max = 500, message = "Description minimum five characters.")
     private String description;
     // This will not allow the createdAt column to be updated after creation
-    @Column(updatable=false)
-    @DateTimeFormat(pattern="yyyy-MM-dd")
+//    @Column(updatable=false)
+//    @DateTimeFormat(pattern="yyyy-MM-dd")
+//    private Date createdAt;
+//    @DateTimeFormat(pattern="yyyy-MM-dd")
+//    private Date updatedAt;
+    @CreationTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "created_at", updatable = false)
     private Date createdAt;
-    @DateTimeFormat(pattern="yyyy-MM-dd")
+
+    @UpdateTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "updated_at")
     private Date updatedAt;
 
     // NO NAME CONSTRUCTOR
     public Expense(){   }
 
     // CONSTRUCTOR
-    public Expense(String name, String vendor, double amount, String description) {
-        this.name = name;
-        this.vendor = vendor;
-        this.amount = amount;
-        this.description = description;
-    }
+//    public Expense(String name, String vendor, double amount, String description) {
+//        this.name = name;
+//        this.vendor = vendor;
+//        this.amount = amount;
+//        this.description = description;
+//    }
 
     // GETTERS AND SETTERS
 
@@ -81,5 +92,21 @@ public class Expense {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public Date getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(Date updatedAt) {
+        this.updatedAt = updatedAt;
     }
 }
